@@ -8,6 +8,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
@@ -77,21 +78,12 @@ public class CircleView extends View {
         this.maxValue = maxValue;
     }
 
-    public void beginAnimator() {
+    public void beginAnimator(int duration, int delay) {
         ValueAnimator colorAnim = ObjectAnimator.ofInt(this, "progress", 0, getMaxValue());
-        colorAnim.setDuration(1000);
-        colorAnim.setStartDelay(100);
+        colorAnim.setDuration(duration);
+        colorAnim.setStartDelay(delay);
+        colorAnim.setInterpolator(new AccelerateDecelerateInterpolator());
         colorAnim.start();
-    }
-
-    public void incrementProgressBy(int step) {
-        if (step > 0) {
-            if (getProgress() + step >= maxValue) {
-                setProgress(getMaxValue());
-            } else {
-                setProgress(getProgress() + step);
-            }
-        }
     }
 
     private void initBackgroundPaint() {
